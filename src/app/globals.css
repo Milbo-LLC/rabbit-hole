@@ -1,27 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer base {
+  h1 {
+    font-size: clamp(24px, 4.2vw, 36px);
+    font-weight: 900;
+    font-family: 'Lilita One', cursive;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  h2 {
+    font-size: clamp(20px, 3.2vw, 28px);
+    font-weight: 500;
+  }
+
+  ul {
+    list-style-type: circle;
+    margin-left: 2rem;
+  }
+
+  ol {
+    list-style: decimal outside;
+    margin-left: 1.5em
+  }
+
+  blockquote {
+    border-left: 10px solid #e3d1e6;
+    margin: 1rem 2rem;
+    padding: 0.5em 10px;
+  }
+
+  blockquote:before {
+    color: #e3d1e6;
+    content: open-quote;
+
+  }
+
+  blockquote p {
+    display: inline;
+  }
+
+  code {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 2rem;
+    padding: 1rem;
+    background: #1e2626;
+    line-height: 1rem;
+    border-left: 10px solid #e3d1e6;
+    color: #d9f6f5;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Change the alpha value to adjust the transparency */
+  z-index: 9;
+  /* Make sure the overlay is on top of everything else */
 }

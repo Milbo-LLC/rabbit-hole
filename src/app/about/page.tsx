@@ -1,9 +1,9 @@
 import Page from "@/components/ui/pages/Page";
 
-export default function Home() {
+export default function About() {
   return (
     <Page>
-      <div>Rabbit Hole</div>
+      <div>About</div>
     </Page>
   );
 }
