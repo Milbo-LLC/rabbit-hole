@@ -4,6 +4,7 @@ import Button from "@/components/ui/buttons/Button";
 import { Grid } from "@mui/material";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 
 // CTA content
@@ -31,6 +32,12 @@ const CallToAction = () => {
 };
 
 export default function Header() {
+  const [hasWindow, setHasWindow] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHasWindow(true);
+    }
+  }, []);
   return (
     <motion.div
       className="flex w-full h-fit bg-[#173F5F] text-white p-8 rounded-lg drop-shadow-lg"
@@ -42,33 +49,34 @@ export default function Header() {
         <Grid item xs={12} md={6}>
           <CallToAction />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <div className="flex h-full justify-center">
-            <motion.div
-              className="flex w-fit h-full justify-center rounded-md drop-shadow-lg"
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 100,
-                damping: 30,
-                delay: 0.2,
-              }}
-            >
-              <div className="flex self-center h-fit">
-                <ReactPlayer
-                  className="rounded-lg overflow-hidden"
-                  url="https://rabbit-hole-assets.s3.amazonaws.com/promo.mp4"
-                  playing={true}
-                  loop
-                  width="100%"
-                  height="100%"
-                  volume={0}
-                />
-              </div>
-            </motion.div>
-          </div>
-        </Grid>
+        {hasWindow && (
+          <Grid item xs={12} md={6}>
+            <div className="flex h-full justify-center">
+              <motion.div
+                className="flex w-fit h-full justify-center rounded-md drop-shadow-lg"
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 30,
+                  delay: 0.2,
+                }}
+              >
+                <div className="flex self-center h-fit">
+                  <ReactPlayer
+                    className="rounded-lg overflow-hidden"
+                    url="https://rabbit-hole-assets.s3.amazonaws.com/promo.mp4"
+                    playing={true}
+                    loop
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </Grid>
+        )}
       </Grid>
     </motion.div>
   );
