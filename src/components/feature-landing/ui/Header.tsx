@@ -49,21 +49,21 @@ export default function Header() {
         <Grid item xs={12} md={6}>
           <CallToAction />
         </Grid>
-        {hasWindow && (
-          <Grid item xs={12} md={6}>
-            <div className="flex h-full justify-center">
-              <motion.div
-                className="flex w-fit h-full justify-center rounded-md drop-shadow-lg"
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 30,
-                  delay: 0.2,
-                }}
-              >
-                <div className="flex self-center h-fit">
+        <Grid item xs={12} md={6}>
+          <div className="flex h-full justify-center min-h-[180px] sm:min-h-[400px]">
+            <motion.div
+              className="flex w-fit h-full justify-center rounded-md drop-shadow-lg"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 30,
+                delay: 0.5,
+              }}
+            >
+              <div className="flex self-center h-fit">
+                {hasWindow && (
                   <ReactPlayer
                     className="rounded-lg overflow-hidden"
                     url="https://rabbit-hole-assets.s3.amazonaws.com/promo.mp4"
@@ -72,11 +72,11 @@ export default function Header() {
                     width="100%"
                     height="100%"
                   />
-                </div>
-              </motion.div>
-            </div>
-          </Grid>
-        )}
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </Grid>
       </Grid>
     </motion.div>
   );
