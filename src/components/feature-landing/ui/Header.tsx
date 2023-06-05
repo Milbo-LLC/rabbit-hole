@@ -4,6 +4,7 @@ import Button from "@/components/ui/buttons/Button";
 import { Grid } from "@mui/material";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import ReactPlayer from "react-player/lazy";
 
 // CTA content
 const title = `Experience the future of learning.`;
@@ -38,21 +39,35 @@ export default function Header() {
       transition={{ type: "spring", stiffness: 100, damping: 30, delay: 0 }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
           <CallToAction />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <motion.div
-            className="flex w-full h-full min-h-[200px] bg-black/40 rounded-md drop-shadow-lg"
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 100,
-              damping: 30,
-              delay: 0.2,
-            }}
-          ></motion.div>
+        <Grid item xs={12} md={6}>
+          <div className="flex h-full justify-center">
+            <motion.div
+              className="flex w-fit h-full justify-center rounded-md drop-shadow-lg"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 30,
+                delay: 0.2,
+              }}
+            >
+              <div className="flex self-center h-fit">
+                <ReactPlayer
+                  className="rounded-lg overflow-hidden"
+                  url="https://rabbit-hole-assets.s3.amazonaws.com/promo.mp4"
+                  playing={true}
+                  loop
+                  width="100%"
+                  height="100%"
+                  volume={0}
+                />
+              </div>
+            </motion.div>
+          </div>
         </Grid>
       </Grid>
     </motion.div>
