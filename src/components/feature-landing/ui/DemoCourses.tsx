@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
 // How it Works content
-const title = `Try out a demo course!`;
+const title = `Try out a demo course.`;
 
 const fakeCourses = [
   {
