@@ -14,23 +14,43 @@ import { useEffect, useRef } from "react";
 import useWindowSize from "@/components/utils/hooks/useWindowSize";
 import { MenuToggle } from "@/components/ui/buttons/MenuToggle";
 import Link from "next/link";
+import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 
 const title = `rabbit hole`;
 const altText = `rabbit hole logo`;
-const tabs = [
-  {
-    label: "Pricing",
-    link: "/pricing",
-  },
-  {
-    label: "About",
-    link: "/about",
-  },
-  {
-    label: "Contact Us",
-    link: "/contact",
-  },
-];
+
+const tabs = (user: UserProfile | undefined) => {
+  if (user) {
+    return [
+      {
+        label: "Logout",
+        link: "/api/auth/logout",
+        className:
+          "bg-[#64B6AC] text-black px-4 py-4 md:py-2 mt-2 md:mt-0 rounded-lg",
+      },
+    ];
+  }
+  return [
+    {
+      label: "Pricing",
+      link: "/pricing",
+    },
+    {
+      label: "About",
+      link: "/about",
+    },
+    {
+      label: "Login",
+      link: "/api/auth/login",
+    },
+    {
+      label: "Get Started",
+      link: "/api/auth/login",
+      className:
+        "bg-[#64B6AC] text-black px-4 py-4 md:py-2 mt-2 md:mt-0 rounded-lg",
+    },
+  ];
+};
 
 const staggerDropdownItems = stagger(0.1, { startDelay: 0.15 });
 
@@ -73,6 +93,8 @@ export default function Topbar() {
   const containerRef = useRef(null);
   const { width } = useWindowSize();
 
+  const { user } = useUser();
+
   useEffect(() => {
     if (width > 768 && isOpen) {
       toggleOpen(undefined);
@@ -89,7 +111,7 @@ export default function Topbar() {
       >
         <Logo Icon={milboLogo} text={title} altText={altText} />
         <div className="hidden md:flex">
-          <Tabs tabs={tabs} />
+          <Tabs tabs={tabs(user)} />
         </div>
         <div className="flex md:hidden">
           {!noTabs && (
@@ -105,7 +127,7 @@ export default function Topbar() {
                     clipPath: "inset(10% 50% 90% 50% round 10px)",
                   }}
                 >
-                  {tabs.map(({ label, link }, index) => {
+                  {tabs(user).map(({ label, link }, index) => {
                     return (
                       <li id="item" key={index} className="list-none">
                         <Link href={link}>

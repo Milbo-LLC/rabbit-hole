@@ -15,5 +15,15 @@ export default function VideoPlayer({ src }: { src: string }) {
     };
   }, []);
 
-  return <video ref={videoRef} src={src} autoPlay muted />;
+  return (
+    <div className="flex">
+      <video
+        className="flex rounded-lg"
+        ref={videoRef}
+        src={src}
+        autoPlay
+        muted
+      />
+    </div>
+  );
 }

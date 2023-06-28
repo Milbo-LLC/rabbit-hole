@@ -68,7 +68,7 @@ export default function Header() {
                 delay: 0.5,
               }}
             >
-              <div className="flex self-center h-fit">
+              <div className="flex self-center">
                 {hasWindow && (
                   <VideoPlayer src="https://rabbit-hole-assets.s3.amazonaws.com/promo.mp4" />
                 )}
