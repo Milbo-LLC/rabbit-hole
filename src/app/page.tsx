@@ -9,10 +9,13 @@ import Header from "@/components/feature-landing/ui/Header";
 // import OthersLearning from "@/components/feature-landing/ui/OthersLearning";
 import HowItWorks from "@/components/feature-landing/ui/HowItWorks";
 import DemoCourses from "@/components/feature-landing/ui/DemoCourses";
+import LoadingScreen from "@/components/ui/pages/LoadingScreen";
+import { GrabUser } from "@/components/utils/hooks/grabUser";
 
 export default function Home() {
   const router = useRouter();
-  const { user, error, isLoading } = useUser();
+
+  const { user, error, isLoading } = GrabUser();
 
   useEffect(() => {
     if (user) {
@@ -21,7 +24,7 @@ export default function Home() {
   }, [router, user]);
 
   // UPDATE NEEDED - Add loading screen and error screen
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen />;
   if (error) return <div>{error.message}</div>;
 
   if (!user) {
