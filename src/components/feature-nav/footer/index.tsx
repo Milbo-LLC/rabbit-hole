@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import milboLogo from "@/assets/logo.svg";
+import rabbitHoleLogo from "@/assets/logo.svg";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -31,7 +31,7 @@ const Logo = () => {
   return (
     <Link className="flex items-center gap-2 justify" href={"/"}>
       <div className="relative flex w-10 h-10">
-        <Image src={milboLogo} alt="rabbit hole Logo" fill />
+        <Image src={rabbitHoleLogo} alt="rabbit hole Logo" fill />
       </div>
       <div className="hidden sm:block font-lilita text-lg">{title}</div>
     </Link>
