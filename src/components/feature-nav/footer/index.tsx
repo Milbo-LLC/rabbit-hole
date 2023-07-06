@@ -4,6 +4,7 @@ import Image from "next/image";
 import milboLogo from "@/assets/logo.svg";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const title = `rabbit hole`;
 
@@ -72,16 +73,21 @@ const Copyright = () => {
 };
 
 export default function Footer() {
-  return (
-    <motion.div
-      className="flex w-full justify-between items-center text-xs sm:text-sm md:text-md font-bold px-6 pb-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ type: "spring", stiffness: 100, damping: 30, delay: 0.5 }}
-    >
-      <Logo />
-      <Links />
-      <Copyright />
-    </motion.div>
-  );
+  const { user } = useUser();
+
+  if (!user) {
+    return (
+      <motion.div
+        className="flex w-full justify-between items-center text-xs sm:text-sm md:text-md font-bold px-6 pb-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ type: "spring", stiffness: 100, damping: 30, delay: 0.5 }}
+      >
+        <Logo />
+        <Links />
+        <Copyright />
+      </motion.div>
+    );
+  }
+  return null;
 }
