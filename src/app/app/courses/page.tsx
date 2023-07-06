@@ -6,6 +6,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CourseSelector from "@/components/feature-course/ui/CourseSelector";
+import LoadingView from "@/components/ui/views/LoadingView";
 
 export default function Courses() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Courses() {
     return (
       <Page>
         <div className="flex w-full h-full justify-center items-center">
-          <PulseLoader size={20} color="#64B6AC" />
+          <LoadingView />
         </div>
       </Page>
     );
