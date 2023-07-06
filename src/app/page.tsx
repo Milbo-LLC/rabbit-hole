@@ -9,6 +9,8 @@ import Header from "@/components/feature-landing/ui/Header";
 // import OthersLearning from "@/components/feature-landing/ui/OthersLearning";
 import HowItWorks from "@/components/feature-landing/ui/HowItWorks";
 import DemoCourses from "@/components/feature-landing/ui/DemoCourses";
+import LoadingScreen from "@/components/ui/pages/LoadingScreen";
+import ErrorScreen from "@/components/ui/pages/ErrorScreen";
 
 export default function Home() {
   const router = useRouter();
@@ -20,9 +22,8 @@ export default function Home() {
     }
   }, [router, user]);
 
-  // UPDATE NEEDED - Add loading screen and error screen
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (isLoading) return <LoadingScreen />;
+  if (error) return <ErrorScreen error={error} />;
 
   if (!user) {
     return (
