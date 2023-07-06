@@ -128,12 +128,11 @@ function CoursePreview({
 }
 
 function Courses({ userId }: { userId: string }) {
-  const { data } = useSuspenseQuery<{ enrolledIn: CourseEnrollment[] }>(
-    EnrolledInQuery,
-    {
-      variables: { userId },
-    }
-  );
+  const { data, refetch: refetchCourses } = useSuspenseQuery<{
+    enrolledIn: CourseEnrollment[];
+  }>(EnrolledInQuery, {
+    variables: { userId },
+  });
   console.log("data: ", data);
 
   const [deleting, setDeleting] = useState(false);
@@ -186,7 +185,7 @@ function Courses({ userId }: { userId: string }) {
         <DeleteCoursePopup
           course={deletePopup}
           onClose={() => setDeletePopup(undefined)}
-          // refetchCourses={refetchCourses}
+          refetchCourses={refetchCourses}
         />
       )}
       <CourseSelectorTopbar

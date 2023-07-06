@@ -2,8 +2,8 @@ import useWindowSize from "@/components/utils/hooks/useWindowSize";
 import Popup from "@/components/ui/popups/Popup";
 import { useState } from "react";
 import Button from "@/components/ui/buttons/Button";
-// import { useMutation } from "@apollo/client";
-// import { DeleteCourseMutation } from "@/components/graph";
+import { useMutation } from "@apollo/client";
+import { DeleteCourseMutation } from "@/components/graph";
 import { Course } from "@/__generated__/graphql";
 
 const title = `Are you sure you want to delete this course?`;
@@ -12,40 +12,40 @@ const subtitle = `This action is permanent.`;
 interface DeleteCoursePopupProps {
   course: Course;
   onClose: () => void;
-  // refetchCourses: any;
+  refetchCourses: any;
 }
 
 export default function DeleteCoursePopup({
   course,
   onClose,
-}: // refetchCourses,
-DeleteCoursePopupProps) {
+  refetchCourses,
+}: DeleteCoursePopupProps) {
   const screenSize = useWindowSize();
   const [loading, setLoading] = useState(false);
 
-  // // MUTATIONS
-  // // Create course mutation
-  // const [deleteCourse] = useMutation(DeleteCourseMutation, {
-  //   onCompleted: (data: { deleteCourse: Course }) => {
-  //     refetchCourses();
-  //     onClose();
-  //     setLoading(false);
-  //   },
-  //   onError: (error) => console.log("error creating course!: ", error),
-  // });
+  // MUTATIONS
+  // Create course mutation
+  const [deleteCourse] = useMutation(DeleteCourseMutation, {
+    onCompleted: (data: { deleteCourse: Course }) => {
+      refetchCourses();
+      onClose();
+      setLoading(false);
+    },
+    onError: (error) => console.log("error creating course!: ", error),
+  });
 
-  // // Function for calling create note mutation
-  // const DeleteCourse = (id: string) => {
-  //   deleteCourse({
-  //     variables: {
-  //       id,
-  //     },
-  //   });
-  // };
+  // Function for calling create note mutation
+  const DeleteCourse = (id: string) => {
+    deleteCourse({
+      variables: {
+        id,
+      },
+    });
+  };
 
   const onSubmit = async () => {
     setLoading(true);
-    // DeleteCourse(course.id);
+    DeleteCourse(course.id);
   };
 
   return (
