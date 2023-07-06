@@ -23,7 +23,7 @@ export default function Home() {
   }, [router, user]);
 
   if (isLoading) return <LoadingScreen />;
-  if (error) return <ErrorScreen error={error} />;
+  if (error) return <ErrorScreen message={error.message} />;
 
   if (!user) {
     return (
