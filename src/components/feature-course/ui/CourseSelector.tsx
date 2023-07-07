@@ -12,6 +12,7 @@ import LoadingView from "@/components/ui/views/LoadingView";
 import Button from "@/components/ui/buttons/Button";
 import CreateCoursePopup from "@/components/feature-course/ui/popups/CreateCoursePopup";
 import DeleteCoursePopup from "@/components/feature-course/ui/popups/DeleteCoursePopup";
+import { createPortal } from "react-dom";
 
 const sortCourses = (courses: Course[]) => {
   return [...courses].sort((a: Course, b: Course) =>
@@ -178,9 +179,17 @@ function Courses({ userId }: { userId: string }) {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      {showCreateCoursePopup && (
-        <CreateCoursePopup onClose={() => setShowCreateCoursePopup(false)} />
-      )}
+      {/* {showCreateCoursePopup && (
+        <CreateCoursePopup
+          authorId={userId}
+          onClose={() => setShowCreateCoursePopup(false)}
+          refetchCourses={refetchCourses}
+        />
+      )} */}
+      <CreateCoursePopup
+        open={showCreateCoursePopup}
+        onClose={() => setShowCreateCoursePopup(false)}
+      />
       {deletePopup && (
         <DeleteCoursePopup
           course={deletePopup}

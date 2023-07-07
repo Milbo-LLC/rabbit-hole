@@ -1,35 +1,23 @@
-import useWindowSize from "@/components/utils/hooks/useWindowSize";
-import Popup from "@/components/ui/popups/Popup";
-
+import Modal from "@/components/ui/modal";
+import { MouseEventHandler } from "react";
 interface CreateCoursePopupProps {
-  // authorId: string;
-  onClose: any;
-  // refetchCourses: any;
+  open: boolean;
+  onClose: MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function CreateCoursePopup({ onClose }: CreateCoursePopupProps) {
-  const screenSize = useWindowSize();
-
+export default function CreateCoursePopup({
+  open,
+  onClose,
+}: CreateCoursePopupProps): JSX.Element {
   return (
-    <Popup
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        borderRadius: "12px",
-        padding: "1rem",
-        width: screenSize.width > 1024 ? "65%" : "90%",
-        maxWidth: 600,
-        height: 400,
-        backgroundColor: "#173F5F",
-      }}
+    <Modal
+      open={open}
       onClose={onClose}
+      className="bg-[#173F5F] bg-gradient-to-r from-black/20 to-black/40 rounded-2xl shadow-2xl	shadow-[#173F5F]/70 border-2 border-[#173F5F]"
     >
-      <div className="flex flex-col w-full h-full items-center justify-between p-0 sm:p-2 gap-1 sm:gap-4">
-        <h1 className="text-white p-6 text-xl md:text-3xl">
-          What would you like to learn next?
-        </h1>
+      <div className="flex w-full h-full justify-center items-center">
+        <div>Design for the modal</div>
       </div>
-    </Popup>
+    </Modal>
   );
 }
