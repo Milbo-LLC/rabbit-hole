@@ -1,5 +1,3 @@
-"use client";
-
 import Form, { FieldValues } from "@/components/ui/form";
 import TextField from "@/components/ui/form-fields/TextField";
 import Button from "@/components/ui/buttons/Button";
