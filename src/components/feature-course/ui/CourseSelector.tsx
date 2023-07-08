@@ -10,9 +10,8 @@ import { Grid } from "@mui/material";
 import { motion } from "framer-motion";
 import LoadingView from "@/components/ui/views/LoadingView";
 import Button from "@/components/ui/buttons/Button";
-import CreateCoursePopup from "@/components/feature-course/ui/popups/CreateCoursePopup";
+import CreateCoursePopup from "./popups/create-course-popup";
 import DeleteCoursePopup from "@/components/feature-course/ui/popups/DeleteCoursePopup";
-import { createPortal } from "react-dom";
 
 const sortCourses = (courses: Course[]) => {
   return [...courses].sort((a: Course, b: Course) =>

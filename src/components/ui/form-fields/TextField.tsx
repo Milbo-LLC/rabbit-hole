@@ -12,8 +12,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import muiTheme from "../themes/MuiThemes";
 
 // TextField Props
-interface TextFieldProps {
-  control: Control<FieldValues>;
+export interface TextFieldProps {
+  control?: Control<FieldValues>;
   name: string;
   type: string;
   placeholder: string;
@@ -49,47 +49,50 @@ export default function TextField({
   errors,
   color = "primary",
 }: TextFieldProps) {
-  return (
-    <ThemeProvider theme={muiTheme}>
-      <div
-        className={`w-full rounded-lg ${
-          errors && (errors[`${name}`] ? "" : "pb-5")
-        }`}
-      >
-        <Controller
-          name={name}
-          control={control}
-          rules={{ required, pattern, validate }}
-          render={({ field }) => {
-            return (
-              <MUITextField
-                className="flex w-full"
-                {...field}
-                type={type}
-                placeholder={`${placeholder}`}
-                disabled={disabled}
-                color={errors && errors[name] ? "error" : color}
-                multiline={multiline}
-                minRows={minRows}
-                maxRows={maxRows}
+  if (control) {
+    return (
+      <ThemeProvider theme={muiTheme}>
+        <div
+          className={`w-full rounded-lg ${
+            errors && (errors[`${name}`] ? "" : "pb-5")
+          }`}
+        >
+          <Controller
+            name={name}
+            control={control}
+            rules={{ required, pattern, validate }}
+            render={({ field }) => {
+              return (
+                <MUITextField
+                  className="flex w-full"
+                  {...field}
+                  type={type}
+                  placeholder={`${placeholder}`}
+                  disabled={disabled}
+                  color={errors && errors[name] ? "error" : color}
+                  multiline={multiline}
+                  minRows={minRows}
+                  maxRows={maxRows}
+                />
+              );
+            }}
+          />
+          {errors && (
+            <div className="flex">
+              <ErrorMessage
+                errors={errors}
+                name={name}
+                render={({ message }) => (
+                  <div className="flex justify-end w-full text-red-500 text-sm font-bold">
+                    {message}
+                  </div>
+                )}
               />
-            );
-          }}
-        />
-        {errors && (
-          <div className="flex">
-            <ErrorMessage
-              errors={errors}
-              name={name}
-              render={({ message }) => (
-                <div className="flex justify-end w-full text-red-500 text-sm font-bold">
-                  {message}
-                </div>
-              )}
-            />
-          </div>
-        )}
-      </div>
-    </ThemeProvider>
-  );
+            </div>
+          )}
+        </div>
+      </ThemeProvider>
+    );
+  }
+  return null;
 }

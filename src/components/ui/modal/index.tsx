@@ -69,7 +69,7 @@ function ModalView({
         >
           <BsX onClick={onClose} className="w-full h-full" />
         </motion.div>
-        <div className="pt-16 sm:pt-0">{children}</div>
+        <div className="pt-16 sm:pt-0 w-full">{children}</div>
       </div>
     </motion.div>
   );
