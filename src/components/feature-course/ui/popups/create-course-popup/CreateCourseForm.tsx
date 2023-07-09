@@ -5,9 +5,13 @@ import { FieldValues, useForm } from "react-hook-form";
 
 interface CreateCourseFormProps {
   onSubmit: (data: FieldValues) => void;
+  loading: boolean;
 }
 
-export default function CreateCourseForm({ onSubmit }: CreateCourseFormProps) {
+export default function CreateCourseForm({
+  onSubmit,
+  loading,
+}: CreateCourseFormProps) {
   // Form variables
   const {
     control,
@@ -16,7 +20,10 @@ export default function CreateCourseForm({ onSubmit }: CreateCourseFormProps) {
   } = useForm<FieldValues>();
 
   return (
-    <form className="flex flex-col w-full items-center p-4" onSubmit={onSubmit}>
+    <form
+      className="flex flex-col w-full items-center p-4"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <TextField
         control={control}
         name="title"
@@ -37,7 +44,7 @@ export default function CreateCourseForm({ onSubmit }: CreateCourseFormProps) {
         errors={errors}
       />
       <div className="flex">
-        <Button label="Jump in" />
+        <Button label="Jump in" loading={loading} />
       </div>
     </form>
   );

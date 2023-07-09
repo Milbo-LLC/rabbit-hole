@@ -128,6 +128,7 @@ function CoursePreview({
 }
 
 function Courses({ userId }: { userId: string }) {
+  console.log("noah - Courses - userId: ", userId);
   const { data, refetch: refetchCourses } = useSuspenseQuery<{
     enrolledIn: CourseEnrollment[];
   }>(EnrolledInQuery, {
@@ -186,8 +187,10 @@ function Courses({ userId }: { userId: string }) {
         />
       )} */}
       <CreateCoursePopup
+        authorId={userId}
         open={showCreateCoursePopup}
         onClose={() => setShowCreateCoursePopup(false)}
+        refetchCourses={refetchCourses}
       />
       {deletePopup && (
         <DeleteCoursePopup
