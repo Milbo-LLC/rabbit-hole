@@ -10,7 +10,7 @@ export { default as DeleteCourseMutation } from "./mutations/DeleteCourse";
 export { default as CreatePrereqsJobMutation } from "./mutations/CreatePrereqsJob";
 export { default as GeneratePrereqsMutation } from "./mutations/GeneratePrereqs";
 export { default as CreateUnitsJobMutation } from "./mutations/CreateUnitsJob";
-export { default as GenerateUnitsMutaiton } from "./mutations/GenerateUnits";
+export { default as GenerateUnitsMutation } from "./mutations/GenerateUnits";
 export { default as GenerateLessonMutation } from "./mutations/GenerateLesson";
 export { default as GenerateExercisesMutation } from "./mutations/GenerateExercises";
 export { default as GenerateQuizMutation } from "./mutations/GenerateQuiz";

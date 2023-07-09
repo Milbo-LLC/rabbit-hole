@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MouseEventHandler } from "react";
 import { createPortal } from "react-dom";
 import { BsX } from "react-icons/bs";
 import { handleClickOutside } from "@/components/utils/helper-functions";
+import useWindowSize from "@/components/utils/hooks/useWindowSize";
 
 // Types
 type Animation = {
@@ -31,6 +32,22 @@ interface ModalProps {
   animation?: Animation;
 }
 
+// const draw = {
+//   hidden: { pathLength: 0, opacity: 0 },
+//   visible: (i: number) => {
+//     const delay = 1 + i * 0.5;
+//     return {
+//       pathLength: 1,
+//       opacity: 1,
+//       transition: {
+//         pathLength: { delay, type: "spring", duration: 1.5, bounce: 0 },
+//         opacity: { delay, duration: 0.01 },
+//         repeat: Infinity,
+//       },
+//     };
+//   },
+// };
+
 function ModalView({
   onClose,
   children,
@@ -38,6 +55,23 @@ function ModalView({
   animation,
 }: ModalViewProps) {
   const ref = useRef(null);
+  const screenSize = useWindowSize();
+  const frame = document.getElementById("frame");
+  const [frameDimensions, setFrameDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    setFrameDimensions({
+      width: frame ? frame.clientWidth : 0,
+      height: frame ? frame.clientHeight : 0,
+    });
+  }, [frame, screenSize]);
+
+  useEffect(() => {
+    console.log("frameDimensions: ", frameDimensions);
+  }, [frameDimensions]);
 
   // Event listener for closing modal when clicking outside of it
   useEffect(() => {
@@ -55,9 +89,35 @@ function ModalView({
       {...animation}
     >
       <div
+        id="frame"
         className={`flex max-w-2xl w-full max-h-[768px] h-full mx-4 relative ${className}`}
         ref={ref}
       >
+        {/* <div className="absolute">
+          <motion.svg
+            width={frameDimensions.width}
+            height={frameDimensions.height}
+            viewBox={`0 0 ${frameDimensions.width} ${frameDimensions.height}`}
+          >
+            <motion.rect
+              width={frameDimensions.width - 4}
+              height={frameDimensions.height - 4}
+              x="2"
+              y="2"
+              rx="12"
+              stroke="#0099ff"
+              strokeWidth="4"
+              className="fill-transparent"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{
+                repeat: Infinity,
+                // repeatType: "mirror",
+                duration: 2,
+              }}
+            />
+          </motion.svg>
+        </div> */}
         <motion.div
           className="flex absolute top-5 right-5 w-10 h-10 cursor-pointer"
           whileHover={{
@@ -85,24 +145,26 @@ export default function Modal({
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          className="flex w-full h-full overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={animation?.transition}
-        >
-          {createPortal(
-            <ModalView
-              onClose={onClose}
-              className={className}
-              animation={animation}
-            >
-              {children}
-            </ModalView>,
-            document.body
-          )}
-        </motion.div>
+        <>
+          <motion.div
+            className="flex w-full h-full overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={animation?.transition}
+          >
+            {createPortal(
+              <ModalView
+                onClose={onClose}
+                className={className}
+                animation={animation}
+              >
+                {children}
+              </ModalView>,
+              document.body
+            )}
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );

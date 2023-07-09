@@ -4,7 +4,7 @@ import CreateCoursePopupView from "@/components/feature-course/ui/popups/create-
 interface CreateCoursePopupProps {
   authorId: string;
   open: boolean;
-  onClose: MouseEventHandler<HTMLButtonElement>;
+  onClose: () => void;
   refetchCourses: () => void;
 }
 
@@ -21,7 +21,6 @@ export default function CreateCoursePopup({
   onClose,
   refetchCourses,
 }: CreateCoursePopupProps): JSX.Element {
-  console.log("noah - CreateCoursePopup - authorId: " + authorId);
   return (
     <Modal
       open={open}
