@@ -120,7 +120,6 @@ export default function About() {
             <CoreValues />
           </div>
         </div>
-        {/* <Footer /> */}
       </div>
     </Page>
   );
