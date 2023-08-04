@@ -13,6 +13,7 @@ import Button from "@/components/ui/buttons/Button";
 import CreateCoursePopup from "./popups/create-course-popup";
 import DeleteCoursePopup from "@/components/feature-course/ui/popups/DeleteCoursePopup";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const sortCourses = (courses: Course[]) => {
   return [...courses].sort((a: Course, b: Course) =>
@@ -38,11 +39,13 @@ const CourseSelectorTopbar = ({
   setShowCreateCoursePopup,
   deleting,
   setDeleting,
+  displayedCourses,
 }: {
   setSearch: (search: string) => void;
   setShowCreateCoursePopup: (sccp: boolean) => void;
   deleting: boolean;
   setDeleting: (deleting: boolean) => void;
+  displayedCourses: Course[];
 }) => {
   return (
     <div className="flex w-full h-14 gap-4">
@@ -53,14 +56,15 @@ const CourseSelectorTopbar = ({
         bgColor="#173F5F"
         className="text-white"
       />
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="flex justify-center items-center py-2 px-4 rounded-lg bg-[#173F5F] cursor-pointer"
+      <Button
+        bgColor="#173F5F"
         onClick={() => setDeleting(!deleting)}
+        className="text-white"
+        disabled={!displayedCourses.length}
+        disabledMessage="You don't have any courses to delete"
       >
         <BsFillTrashFill className="text-2xl" />
-      </motion.div>
+      </Button>
     </div>
   );
 };
@@ -70,15 +74,14 @@ export const dynamic = "force-dynamic";
 
 function CoursePreview({
   course,
-  // router,
   deleting,
   setDeletePopup,
 }: {
   course: Course;
-  // router: NextRouter;
   deleting: boolean;
   setDeletePopup: (course: Course) => void;
 }) {
+  const router = useRouter();
   const { title, description, units } = course;
 
   const loading =
@@ -94,37 +97,29 @@ function CoursePreview({
           </div>
         </div>
       ) : (
-        <Link href={`/app/course/${course.id}`}>
-          <motion.div
-            className={`bg-[#173F5F] text-white h-48 p-4 rounded-lg border-2 border-transparent relative ${
-              !deleting && "hover:border-white cursor-pointer"
-            }`}
-            whileTap={!deleting ? { scale: 0.95 } : {}}
-            // onClick={() =>
-            //   !deleting &&
-            //   router.push({
-            //     pathname: "/app/course/[courseId]",
-            //     query: { courseId: course.id },
-            //   })
-            // }
-          >
-            {deleting && (
-              <motion.div
-                layout
-                initial={{ opacity: 0, y: 0, x: 16 }}
-                animate={{ opacity: 1, y: -16, x: 16 }}
-                onClick={() => console.log("DELETE COURSE")}
-              >
-                <BsXCircleFill
-                  className="text-3xl absolute -top-2 -right-2 bg-[#173F5F] rounded-full cursor-pointer hover:text-[#64B6AC] hover:bg-white"
-                  onClick={() => setDeletePopup(course)}
-                />
-              </motion.div>
-            )}
-            <div className="text-2xl font-bold">{title}</div>
-            <div className="h-18 line-clamp-3">{description}</div>
-          </motion.div>
-        </Link>
+        <motion.div
+          className={`bg-[#173F5F] text-white h-48 p-4 rounded-lg border-2 border-transparent relative ${
+            !deleting && "hover:border-white cursor-pointer"
+          }`}
+          whileTap={!deleting ? { scale: 0.95 } : {}}
+          onClick={() => !deleting && router.push(`/app/course/${course.id}`)}
+        >
+          {deleting && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 0, x: 16 }}
+              animate={{ opacity: 1, y: -16, x: 16 }}
+              onClick={() => console.log("DELETE COURSE")}
+            >
+              <BsXCircleFill
+                className="text-3xl absolute -top-2 -right-2 bg-[#173F5F] rounded-full cursor-pointer hover:text-[#64B6AC] hover:bg-white"
+                onClick={() => setDeletePopup(course)}
+              />
+            </motion.div>
+          )}
+          <div className="text-2xl font-bold">{title}</div>
+          <div className="h-18 line-clamp-3">{description}</div>
+        </motion.div>
       )}
     </Grid>
   );
@@ -207,6 +202,7 @@ function Courses({ userId }: { userId: string }) {
         setShowCreateCoursePopup={setShowCreateCoursePopup}
         deleting={deleting}
         setDeleting={setDeleting}
+        displayedCourses={displayedCourses}
       />
       <Grid container spacing={2}>
         {displayedCourses.map((course: Course) => {

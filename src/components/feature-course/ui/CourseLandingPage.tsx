@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import Router, { useRouter } from "next/router";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BsChevronUp, BsChevronDown } from "react-icons/bs";
 import {
   Course,
@@ -42,6 +44,7 @@ const CourseDetails = ({
   course: Course;
   progress: CourseProgress;
 }) => {
+  const router = useRouter();
   const unit = course.units.find((unit) =>
     unit?.lessons.find((lesson) => lesson!.id === progress.currentLessonId)
   );
@@ -102,16 +105,13 @@ const CourseDetails = ({
             onClick={() =>
               course.units[0] &&
               course.units[0].lessons[0] &&
-              Router.push({
-                pathname:
-                  "/app/course/[courseId]/unit/[unitId]/lesson/[lessonId]",
-                query: {
-                  courseId: course.id,
-                  unitId: unit ? unit.id : course.units[0].id,
-                  lessonId:
-                    progress.currentLessonId || course.units[0]!.lessons[0].id,
-                },
-              })
+              router.push(
+                `/app/course/${course.id}/unit/${
+                  unit ? unit.id : course.units[0].id
+                }/lesson/${
+                  progress.currentLessonId || course.units[0]!.lessons[0].id
+                }`
+              )
             }
           >
             <div className="font-semibold">Jump in</div>
@@ -247,6 +247,7 @@ const UnitLessons = ({
   lessons: Maybe<UnitLesson>[];
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const sortedLessons = lessons
     ? [...lessons].sort((a, b) => a!.order - b!.order)
     : lessons;
@@ -263,15 +264,11 @@ const UnitLessons = ({
                   <div
                     className="cursor-pointer hover:font-bold"
                     onClick={() =>
-                      router.push({
-                        pathname:
-                          "/app/course/[courseId]/unit/[unitId]/lesson/[lessonId]",
-                        query: {
-                          courseId: router.query.courseId,
-                          unitId: unitId,
-                          lessonId: lesson.id,
-                        },
-                      })
+                      router.push(
+                        `/app/course/${searchParams?.get(
+                          "courseId"
+                        )}/unit/${unitId}/lesson/${lesson.id}`
+                      )
                     }
                   >
                     {title}
@@ -287,6 +284,7 @@ const UnitLessons = ({
 };
 
 const UnitExercises = ({ unitId }: { unitId: string }) => {
+  const searchParams = useSearchParams();
   const router = useRouter();
   return (
     <div className="flex bg-[#173F5F] rounded-lg">
@@ -296,17 +294,13 @@ const UnitExercises = ({ unitId }: { unitId: string }) => {
           <div
             className="cursor-pointer hover:font-bold"
             onClick={() =>
-              router.push({
-                pathname: "/app/course/[courseId]/unit/[unitId]/exercises",
-                query: {
-                  courseId: router.query.courseId,
-                  unitId: unitId,
-                },
-              })
+              router.push(
+                `/app/course/${searchParams?.get(
+                  "courseId"
+                )}/unit/${unitId}/exercises`
+              )
             }
-          >
-            {`Exercises`}
-          </div>
+          >{`Exercises`}</div>
         </label>
       </div>
     </div>
@@ -314,6 +308,7 @@ const UnitExercises = ({ unitId }: { unitId: string }) => {
 };
 
 const UnitQuiz = ({ unitId }: { unitId: string }) => {
+  const searchParams = useSearchParams();
   const router = useRouter();
   return (
     <div className="flex bg-[#173F5F] rounded-lg">
@@ -323,17 +318,13 @@ const UnitQuiz = ({ unitId }: { unitId: string }) => {
           <div
             className="cursor-pointer hover:font-bold"
             onClick={() =>
-              router.push({
-                pathname: "/app/course/[courseId]/unit/[unitId]/quiz",
-                query: {
-                  courseId: router.query.courseId,
-                  unitId: unitId,
-                },
-              })
+              router.push(
+                `/app/course/${searchParams?.get(
+                  "courseId"
+                )}/unit/${unitId}/quiz`
+              )
             }
-          >
-            {`Quiz`}
-          </div>
+          >{`Quiz`}</div>
         </label>
       </div>
     </div>
@@ -435,9 +426,9 @@ export default function CourseLandingPage({
   loadingUnits: boolean;
   refetchEnrollment: () => void;
 }) {
-  useEffect(() => {
-    refetchEnrollment();
-  }, [refetchEnrollment]);
+  // useEffect(() => {
+  //   refetchEnrollment();
+  // }, [refetchEnrollment]);
 
   const { title, description, prereqs, units } = course;
   const [expandedPrereqs, setExpandedPrereqs] = useState<string[]>([]);

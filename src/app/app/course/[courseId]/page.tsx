@@ -22,7 +22,7 @@ const CourseView = ({
   userId: string;
   courseId: string;
 }) => {
-  const [timer, setTimer] = useState(0);
+  // const [timer, setTimer] = useState(0);
   const [loadingPrereqs, setLoadingPrereqs] = useState(false);
   const [loadingUnits, setLoadingUnits] = useState(false);
 
@@ -32,43 +32,43 @@ const CourseView = ({
     variables: { userId, courseId },
   });
 
-  useEffect(() => {
-    if (
-      data &&
-      data.enrollment.course.prereqs &&
-      data.enrollment.course.prereqs.length === 0
-    ) {
-      setLoadingPrereqs(true);
-      setLoadingUnits(true);
-      refetchEnrollment();
-      //Implementing the setInterval method
-      const interval = setInterval(() => {
-        setTimer(timer + 1);
-      }, 1000);
+  // useEffect(() => {
+  //   if (
+  //     data &&
+  //     data.enrollment.course.prereqs &&
+  //     data.enrollment.course.prereqs.length === 0
+  //   ) {
+  //     setLoadingPrereqs(true);
+  //     setLoadingUnits(true);
+  //     refetchEnrollment();
+  //     //Implementing the setInterval method
+  //     const interval = setInterval(() => {
+  //       setTimer(timer + 1);
+  //     }, 1000);
 
-      //Clearing the interval
-      return () => clearInterval(interval);
-    } else {
-      setLoadingPrereqs(false);
-    }
+  //     //Clearing the interval
+  //     return () => clearInterval(interval);
+  //   } else {
+  //     setLoadingPrereqs(false);
+  //   }
 
-    if (
-      data &&
-      data.enrollment.course.units &&
-      data.enrollment.course.units.length === 0
-    ) {
-      refetchEnrollment();
-      //Implementing the setInterval method
-      const interval = setInterval(() => {
-        setTimer(timer + 1);
-      }, 1000);
+  //   if (
+  //     data &&
+  //     data.enrollment.course.units &&
+  //     data.enrollment.course.units.length === 0
+  //   ) {
+  //     refetchEnrollment();
+  //     //Implementing the setInterval method
+  //     const interval = setInterval(() => {
+  //       setTimer(timer + 1);
+  //     }, 1000);
 
-      //Clearing the interval
-      return () => clearInterval(interval);
-    } else {
-      setLoadingUnits(false);
-    }
-  }, [data, timer]);
+  //     //Clearing the interval
+  //     return () => clearInterval(interval);
+  //   } else {
+  //     setLoadingUnits(false);
+  //   }
+  // }, [data, timer]);
 
   if (data) {
     const { course, progress } = data.enrollment;

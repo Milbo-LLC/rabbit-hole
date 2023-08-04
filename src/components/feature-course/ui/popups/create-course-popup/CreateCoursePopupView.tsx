@@ -84,21 +84,21 @@ export default function CreateCoursePopupView({
   const [generateUnits] = useMutation(GenerateUnitsMutation, {
     onCompleted: (data: { generateUnits: Course }) => {
       refetchCourses();
-      data.generateUnits.units.forEach((unit: Maybe<CourseUnit>) => {
-        if (unit) {
-          unit.lessons.forEach((lesson: Maybe<UnitLesson>) => {
-            lesson &&
-              GenerateLesson(
-                data.generateUnits.title,
-                data.generateUnits.description,
-                lesson.id,
-                lesson.title,
-                lesson.topics
-              );
-          });
-          GenerateQuiz(unit.id);
-        }
-      });
+      // data.generateUnits.units.forEach((unit: Maybe<CourseUnit>) => {
+      //   if (unit) {
+      //     unit.lessons.forEach((lesson: Maybe<UnitLesson>) => {
+      //       lesson &&
+      //         GenerateLesson(
+      //           data.generateUnits.title,
+      //           data.generateUnits.description,
+      //           lesson.id,
+      //           lesson.title,
+      //           lesson.topics
+      //         );
+      //     });
+      //     GenerateQuiz(unit.id);
+      //   }
+      // });
     },
     onError: (error) => console.log("error generating units!: ", error),
   });
