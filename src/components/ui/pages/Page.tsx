@@ -10,10 +10,8 @@ export default function Page({ children }: PageProps) {
     <div className="flex bg-black text-white min-w-0 w-full max-w-screen min-h-screen">
       <div className="flex flex-col h-full w-screen min-h-screen justify-between">
         <Topbar />
-        <div className="flex flex-col h-full scrollbar-hide justify-between">
-          <div className="flex min-h-fit h-full py-8 px-2 sm:px-4">
-            {children}
-          </div>
+        <div className="flex flex-1 flex-col h-full scrollbar-hide justify-center">
+          <div className="flex overflow-auto p-4">{children}</div>
         </div>
         <Footer />
       </div>

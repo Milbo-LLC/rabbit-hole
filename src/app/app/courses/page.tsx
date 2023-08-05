@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CourseSelector from "@/components/feature-course/ui/CourseSelector";
 import LoadingView from "@/components/ui/views/LoadingView";
+import AppPage from "@/components/ui/pages/AppPage";
 
 export default function Courses() {
   const router = useRouter();
@@ -22,11 +23,11 @@ export default function Courses() {
   // Loading View
   if (isLoading) {
     return (
-      <Page>
+      <AppPage>
         <div className="flex w-full h-full justify-center items-center">
           <LoadingView />
         </div>
-      </Page>
+      </AppPage>
     );
   }
 
@@ -36,9 +37,9 @@ export default function Courses() {
   // Logged in view
   if (user) {
     return (
-      <Page>
+      <AppPage>
         <CourseSelector user={user} />
-      </Page>
+      </AppPage>
     );
   }
 

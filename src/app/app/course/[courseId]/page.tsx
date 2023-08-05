@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, Suspense } from "react";
 import { EnrollmentQuery } from "@/components/graph";
-import Page from "@/components/ui/pages/Page";
+import AppPage from "@/components/ui/pages/AppPage";
 // import LoadingPage from "@/components/ui/pages/LoadingPage";
 // import ErrorPage from "@/components/ui/pages/ErrorPage";
 import CourseLandingPage from "@/components/feature-course/ui/CourseLandingPage";
@@ -102,11 +102,11 @@ export default function ActiveCourse({
 
   if (user && courseId) {
     return (
-      <Page>
+      <AppPage>
         <Suspense fallback={<LoadingView />}>
           <CourseView userId={user.sub!} courseId={courseId as string} />
         </Suspense>
-      </Page>
+      </AppPage>
     );
   }
 

@@ -225,7 +225,7 @@ export default function CourseSelector({ user }: { user: UserProfile }) {
   const userId = user.sub;
   const [search, setSearch] = useState("");
   return (
-    <div className="flex w-full">
+    <div className="flex w-full h-full">
       <Suspense fallback={<LoadingView />}>
         <Courses userId={userId!} />
       </Suspense>

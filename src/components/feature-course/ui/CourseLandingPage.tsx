@@ -434,7 +434,7 @@ export default function CourseLandingPage({
   const [expandedPrereqs, setExpandedPrereqs] = useState<string[]>([]);
   const [expandedUnits, setExpandedUnits] = useState<string[]>([]);
   return (
-    <div className="flex flex-col w-full h-full items-center p-4 overflow-auto">
+    <div className="flex flex-col w-full h-full items-center overflow-auto">
       <div className="flex flex-col gap-4 w-full">
         {loadingPrereqs || loadingUnits ? (
           <LoadingCourseDetails title={title} description={description} />
